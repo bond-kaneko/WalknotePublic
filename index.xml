@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Walknote</title>
+    <link>http://example.org/</link>
+    <description>Recent content on Walknote</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja</language>
+    <lastBuildDate>Fri, 24 Dec 2021 15:18:10 +0900</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>最初の記事</title>
+      <link>http://example.org/posts/first-post/</link>
+      <pubDate>Fri, 24 Dec 2021 15:18:10 +0900</pubDate>
+      
+      <guid>http://example.org/posts/first-post/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://example.org/readme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/readme/</guid>
+      <description>README </description>
+    </item>
+    
+  </channel>
+</rss>
