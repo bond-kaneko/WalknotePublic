@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<title>Hugoで記事を書いてGithubPagesで公開するまで | Walknote</title>
+
+<link rel="stylesheet" href="https://bond-kaneko.github.io/WalknotePublic//css/styles.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" 
+integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+<link rel="shortcut icon" href="https://bond-kaneko.github.io/WalknotePublic//images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="https://bond-kaneko.github.io/WalknotePublic//images/favicon.ico" type="image/x-icon">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/zenburn.min.css" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="https://bond-kaneko.github.io/WalknotePublic//js/highlight.js"></script>
+
+
+
+
+
+
+
+
+<div class="container">
+    <nav class="navbar level">
+      <div class="navbar-brand">
+          <a class="nav-item" href="https://bond-kaneko.github.io/WalknotePublic/"><h1 class="title is-3">Walknote</h1></a>
+      </div>           
+      <div class="navbar-menu has-text-centered is-active">
+          <div class="navbar-end is-centered">
+              
+                <a href="https://github.com/bond-kaneko" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                </a>
+              
+                <a href="https://twitter.com/bond_kaneko" rel="me">
+                  <span class="icon">
+                    <i class="fab fa-twitter"></i>
+                  </span>
+                </a>
+              
+           </div>
+      </div>
+    </nav>
+  </div>
+
+<div class="container">
+  <h2 class="subtitle is-6">2021-12-24 03:18PM</h2>
+  <h1 class="subtitle is-size-4-mobile is-size-3-desktop">Hugoで記事を書いてGithubPagesで公開するまで</h1>
+  <div class="content">
+    <h2 id="前提">前提</h2>
+<p><a href="https://github.com/natarajmb/charaka-hugo-theme">QuickStart</a>は終わっている状態</p>
+<h2 id="テーマ">テーマ</h2>
+<p>今回使用したテーマは<a href="https://github.com/natarajmb/charaka-hugo-theme">charaka</a>です。
+僕の好きな色合いで、レイアウトもシンプルなのが気に入りました。</p>
+<p>カスタマイズについては<a href="https://gohugobrasil.netlify.app/themes/customizing/">公式が解説</a>を用意してくれています。
+この解説の通りにすれば問題なくカスタマイズできると思います。</p>
+<p>ただ、僕の場合は解説を誤解していたので、一応メモに残しておきます。</p>
+<h2 id="テーマのカスタマイズ">テーマのカスタマイズ</h2>
+<p>Hugoのテーマをカスタマイズする場合は、<code>themes/</code>以下にあるテーマファイルを直接書き換えるのではなく、<code>layouts/</code>以下に同じディレクトリ構成を用意します。</p>
+<p>そうするとテーマファイルよりも<code>layouts/</code>以下のファイルの方が優先度が高くなり、テーマを上書きできます。</p>
+<p>僕が誤解していたのは下記のサンプルで、</p>
+<p>↓のテーマファイルを</p>
+<pre tabindex="0"><code>/themes/&lt;THEME&gt;/layouts/_default/single.html
+</code></pre><p>↓で上書きできるよ、というものです</p>
+<pre tabindex="0"><code>/layouts/_default/single.html
+</code></pre><p>この説明を、僕は「<code>_default/</code>以下にファイルを置かなければいけない」と勘違いしていました。</p>
+<p>実際のcharakaのディレクトリ構成を例にとると、↓の位置にあるファイルを</p>
+<pre tabindex="0"><code>themes/charaka-hugo-theme/layouts/index.html
+</code></pre><p>↓のファイルで上書きしようとしていました。</p>
+<pre tabindex="0"><code>layouts/_default/index.html
+</code></pre><p>今回の場合、正しくは↓の位置で上書きできます。</p>
+<pre tabindex="0"><code>layouts/index.html
+</code></pre><p>解説はちゃんと読めば誤解のしようはない書き方だったので、同じ誤解をしている人はあまりいないと思いますが参考程度に。</p>
+<h2 id="faviconの追加">faviconの追加</h2>
+<p>意外とここで少し躓きました。</p>
+<p>今回のテーマだと<code>themes/charaka-hugo-theme/layouts/partials/header.html</code>でfaviconを呼び出しているのですが、なぜか<code>head</code>タグが<code>&lt;div class=&quot;container&quot;&gt;</code>の中で読み込まれていました。</p>
+<p><code>themes/charaka-hugo-theme/layouts/index.html</code>の先頭の</p>
+<pre tabindex="0"><code>&lt;div class=&quot;container&quot;&gt;
+  {{ partial &quot;header&quot; . }}
+  {{ partial &quot;nav&quot; . }}
+...
+
+</code></pre><p>の箇所です。
+これが原因でfaviconファイルのURL指定が上書きできず、404エラーが返ってきていました。</p>
+<p>解決は簡単で、タグの順番を入れ替えてやれば正常にfaviconを読み込めるようになりました。</p>
+<pre tabindex="0"><code>{{ partial &quot;header&quot; . }}
+{{ partial &quot;nav&quot; . }}
+  &lt;div class=&quot;container&quot;&gt;
+...
+
+</code></pre><h2 id="githubpages">GithubPages</h2>
+<p>テーマを修正し、記事を書けば続いてGithubPagesでの公開です。
+こちらも同じく<a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/creating-a-github-pages-site">公式の解説</a>があるので、基本はこちらに則って進めればできるはずです。</p>
+<p>Githubリポジトリをどうするか、ベストプラクティスは分からないのですが、僕の場合はリポジトリを二つに分けることにしました。
+<code>hugo new site &lt;サイト名&gt;</code>で生成されるコード全体はprivateリポジトリとして、<code>public/</code>以下をsubmoduleにしてpublicリポジトリとしました。
+GithubPagesではルートディレクトリか、<code>/docs/</code>以下しか公開ディレクトリに指定できないためです。
+↓全体はprivateリポジトリで、<code>public/</code>以下だけ別のpublicリポジトリということです。</p>
+<pre tabindex="0"><code>% tree -d -L 1
+.
+├── archetypes
+├── content
+├── data
+├── layouts
+├── public
+├── resources
+├── static
+└── themes
+</code></pre><p>この構成でpublicリポジトリのルートディレクトリをGithubPagesで公開ディレクトリに設定すれば、問題なく記事を公開できました。</p>
+<p>Netlify使う方がいいよ、とか色々と別の方法も見かけましたが、とりあえずこれでやってみることにします。</p>
+<p>うまくいかなかったら別の方法探してまた記事にするかもしれません。</p>
+
+  </div>
+</div>
+<div class="container has-text-centered">
+    
+</div>
+
+<div class="container has-text-centered">
+  
+</div>
+<section class="section">
+  <div class="container has-text-centered">
+    <p></p>
+  </div>
+</section>
+
+
